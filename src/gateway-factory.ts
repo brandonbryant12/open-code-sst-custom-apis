@@ -1,4 +1,4 @@
-import { type LanguageModelV2, type ProviderV2 } from '@ai-sdk/provider';
+import { type LanguageModelV1, type ProviderV1 } from '@ai-sdk/provider';
 import type { AmazonBedrockProvider } from '@ai-sdk/amazon-bedrock';
 import type { OpenAIProvider } from '@ai-sdk/openai';
 import { createCustomBedrockProvider } from './providers/custom-bedrock';
@@ -34,7 +34,7 @@ export type GatewayConfig = {
 };
 
 export class GatewayService {
-  private provider: ProviderV2;
+  private provider: ProviderV1;
   private models: Map<string, ModelConfig>;
   private defaultModelId: string;
 
@@ -78,11 +78,11 @@ export class GatewayService {
     }
   }
 
-  getProvider(): ProviderV2 {
+  getProvider(): ProviderV1 {
     return this.provider;
   }
 
-  getModel(modelId?: string): LanguageModelV2 {
+  getModel(modelId?: string): LanguageModelV1 {
     const id = modelId || this.defaultModelId;
     const modelConfig = this.models.get(id);
     
@@ -97,7 +97,7 @@ export class GatewayService {
     return Array.from(this.models.values());
   }
 
-  getDefaultModel(): LanguageModelV2 {
+  getDefaultModel(): LanguageModelV1 {
     return this.getModel(this.defaultModelId);
   }
 }
