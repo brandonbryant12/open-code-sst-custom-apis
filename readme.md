@@ -4,7 +4,7 @@ This repository provides a local adapter for using custom AI gateways (OpenAI an
 
 ## Prerequisites
 
-- Node.js 18+
+- Node.js 18+ or Bun
 - Open Code SST installed locally
 - Access to your custom gateway endpoints
 
@@ -17,15 +17,20 @@ This repository provides a local adapter for using custom AI gateways (OpenAI an
 git clone https://github.com/brandonbryant12/open-code-sst-custom-apis
 cd open-code-sst-custom-apis
 
-# Install dependencies
+# Install dependencies (npm, yarn, or bun)
 npm install
+# or
+bun install
 
 # Build the project
 npm run build
+# or
+bun run build
 ```
 
 ### 2. Link for Local Development
 
+#### Using npm:
 ```bash
 # Link this package locally
 npm link
@@ -33,6 +38,16 @@ npm link
 # In your Open Code SST project directory
 cd /path/to/your/opencode-sst-project
 npm link open-code-sst-custom-apis
+```
+
+#### Using Bun:
+```bash
+# Link this package locally
+bun link
+
+# In your Open Code SST project directory
+cd /path/to/your/opencode-sst-project
+bun link open-code-sst-custom-apis
 ```
 
 ### 3. Configure Open Code SST
@@ -168,7 +183,7 @@ npm run validate-env
 ### Common Issues
 
 1. **Module not found**
-   - Ensure you've run `npm link` in both directories
+   - Ensure you've run `npm link` (or `bun link`) in both directories
    - Check that the build completed successfully
 
 2. **Invalid environment variables**
