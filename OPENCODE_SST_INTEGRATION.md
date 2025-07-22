@@ -26,7 +26,7 @@ npm install --save-dev @opencode/sst
 
 ```bash
 # In your Open Code SST project directory
-npm install @your-org/open-code-sst-custom-apis
+npm install open-code-sst-custom-apis
 ```
 
 ### Option B: Use Local Development
@@ -45,7 +45,7 @@ npm link
 
 # In your Open Code SST project
 cd /path/to/your/opencode-sst-project
-npm link @your-org/open-code-sst-custom-apis
+npm link open-code-sst-custom-apis
 ```
 
 ## Step 3: Configure Open Code SST
@@ -55,7 +55,7 @@ npm link @your-org/open-code-sst-custom-apis
 Create `sst.config.js` in your Open Code SST project root:
 
 ```javascript
-const { getGatewayService } = require('@your-org/open-code-sst-custom-apis');
+const { getGatewayService } = require('open-code-sst-custom-apis');
 
 // Initialize gateway once to avoid multiple initializations
 let gatewayInstance = null;
@@ -177,7 +177,7 @@ opencode-sst --config ./sst.config.js
 Create a test script `test-integration.js`:
 
 ```javascript
-const { getGatewayService } = require('@your-org/open-code-sst-custom-apis');
+const { getGatewayService } = require('open-code-sst-custom-apis');
 
 async function testIntegration() {
   try {
@@ -308,13 +308,13 @@ module.exports = {
 
 ### Common Issues and Solutions
 
-1. **"Cannot find module '@your-org/open-code-sst-custom-apis'"**
+1. **"Cannot find module 'open-code-sst-custom-apis'"**
    ```bash
    # Ensure package is installed
-   npm install @your-org/open-code-sst-custom-apis
+   npm install open-code-sst-custom-apis
    
    # Or if using local development
-   npm link @your-org/open-code-sst-custom-apis
+   npm link open-code-sst-custom-apis
    ```
 
 2. **"Environment validation failed"**
@@ -392,7 +392,7 @@ Here's a complete example of integrating with Open Code SST:
 
 ```javascript
 // sst.config.js
-const { getGatewayService } = require('@your-org/open-code-sst-custom-apis');
+const { getGatewayService } = require('open-code-sst-custom-apis');
 const dotenv = require('dotenv');
 
 // Load environment variables

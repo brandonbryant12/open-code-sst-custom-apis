@@ -32,9 +32,9 @@ yarn global add open-code-sst
 ### Step 2: Install Custom Gateway Package
 
 ```bash
-npm install @your-org/open-code-sst-custom-apis
+npm install open-code-sst-custom-apis
 # or
-yarn add @your-org/open-code-sst-custom-apis
+yarn add open-code-sst-custom-apis
 ```
 
 ### Step 3: Install Required Dependencies
@@ -148,7 +148,7 @@ NODE_TLS_REJECT_UNAUTHORIZED=1 # Set to 0 to disable certificate validation (not
 ### Basic Usage
 
 ```typescript
-import { getGatewayService } from '@your-org/open-code-sst-custom-apis';
+import { getGatewayService } from 'open-code-sst-custom-apis';
 import { generateText, streamText } from 'ai';
 
 // Get the gateway service
@@ -196,7 +196,7 @@ for await (const chunk of stream) {
 Create a configuration file `open-code-sst.config.js`:
 
 ```javascript
-const { getGatewayService } = require('@your-org/open-code-sst-custom-apis');
+const { getGatewayService } = require('open-code-sst-custom-apis');
 
 module.exports = {
   ai: {
@@ -249,7 +249,7 @@ DEBUG=gateway:* npm start
 Create a test script to validate your configuration:
 
 ```javascript
-const { initializeGateway } = require('@your-org/open-code-sst-custom-apis');
+const { initializeGateway } = require('open-code-sst-custom-apis');
 
 try {
   const gateway = initializeGateway();

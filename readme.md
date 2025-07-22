@@ -16,7 +16,7 @@ This repository provides custom API gateway implementations for Open Code SST, s
 ### 1. Install the package
 
 ```bash
-npm install @your-org/open-code-sst-custom-apis
+npm install open-code-sst-custom-apis
 ```
 
 ### 2. Set environment variables
@@ -37,7 +37,7 @@ CUSTOM_BEDROCK_APP_ID=your-app-id
 ### 3. Use in your code
 
 ```typescript
-import { getGatewayService } from '@your-org/open-code-sst-custom-apis';
+import { getGatewayService } from 'open-code-sst-custom-apis';
 import { generateText } from 'ai';
 
 const gateway = getGatewayService();

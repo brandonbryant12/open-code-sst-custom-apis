@@ -3,7 +3,7 @@
  * Place this file in your Open Code SST project root
  */
 
-const { getGatewayService } = require('@your-org/open-code-sst-custom-apis');
+const { getGatewayService } = require('open-code-sst-custom-apis');
 
 // Initialize the gateway service once
 let gatewayInstance = null;

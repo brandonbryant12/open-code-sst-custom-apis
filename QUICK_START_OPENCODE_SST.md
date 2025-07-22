@@ -4,7 +4,7 @@
 
 ```bash
 # In your Open Code SST project
-npm install @your-org/open-code-sst-custom-apis dotenv
+npm install open-code-sst-custom-apis dotenv
 ```
 
 ## 2. Create Configuration File
@@ -12,7 +12,7 @@ npm install @your-org/open-code-sst-custom-apis dotenv
 Create `sst.config.js` in your project root:
 
 ```javascript
-const { getGatewayService } = require('@your-org/open-code-sst-custom-apis');
+const { getGatewayService } = require('open-code-sst-custom-apis');
 require('dotenv').config();
 
 let gateway = null;
