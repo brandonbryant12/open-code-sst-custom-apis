@@ -1,0 +1,30 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "provider": {
+    "custom-bedrock": {
+      "npm": "open-code-custom-gateways",
+      "name": "Custom Bedrock Gateway",
+      "options": {
+        "type": "bedrock",
+        "baseURL": "{env:CUSTOM_BEDROCK_BASE_URL}",
+        "appId": "{env:CUSTOM_BEDROCK_APP_ID}",
+        "appName": "{env:CUSTOM_BEDROCK_APP_NAME}",
+        "oauthUrl": "{env:CUSTOM_BEDROCK_OAUTH_URL}",
+        "clientId": "{env:CUSTOM_BEDROCK_CLIENT_ID}",
+        "clientSecret": "{env:CUSTOM_BEDROCK_CLIENT_SECRET}"
+      },
+      "models": {
+        "claude-opus-4": {
+          "name": "Claude Opus 4"
+        },
+        "claude-3-sonnet": {
+          "name": "Claude 3 Sonnet"
+        },
+        "claude-instant": {
+          "name": "Claude Instant"
+        }
+      }
+    }
+  },
+  "model": "custom-bedrock/claude-opus-4"
+}

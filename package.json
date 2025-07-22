@@ -1,7 +1,7 @@
 {
-  "name": "open-code-sst-custom-apis",
+  "name": "open-code-custom-gateways",
   "private": true,
-  "description": "Local adapter for custom AI gateways with Open Code SST",
+  "description": "Local provider for custom AI gateways (OpenAI & Bedrock) with Open Code",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {

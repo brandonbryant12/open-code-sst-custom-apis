@@ -1,10 +1,15 @@
-import { createGatewayService, type GatewayService } from './gateway-factory';
-import { loadGatewayConfig, validateEnv } from './config-loader';
+// Main export for Open Code provider
+export { default } from './opencode-provider';
+export type { OpenCodeProviderOptions } from './opencode-provider';
 
+// Legacy exports for backward compatibility
 export * from './gateway-factory';
 export * from './config-loader';
 export { createCustomBedrockProvider } from './providers/custom-bedrock';
 export { createCustomOpenAIProvider } from './providers/custom-openai';
+
+import { createGatewayService, type GatewayService } from './gateway-factory';
+import { loadGatewayConfig, validateEnv } from './config-loader';
 
 let gatewayService: GatewayService | null = null;
 

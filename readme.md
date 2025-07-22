@@ -1,23 +1,30 @@
-# Open Code SST Custom API Local Adapter
+# Open Code Custom Gateway Adapter
 
-This repository provides a local adapter for using custom AI gateways (OpenAI and Bedrock) with Open Code SST during development.
+Local adapter for using custom AI gateways (OpenAI and Bedrock) with Open Code.
+
+## Overview
+
+This repository provides custom provider implementations for Open Code that handle:
+- OAuth authentication for Bedrock gateways
+- Multiple model support per provider
+- OpenAI-compatible gateway connections
 
 ## Prerequisites
 
 - Node.js 18+ or Bun
-- Open Code SST installed locally
+- Open Code installed (`npm install -g @opencode/ai` or `bun add -g @opencode/ai`)
 - Access to your custom gateway endpoints
 
-## Quick Setup
+## Setup
 
-### 1. Clone and Install
+### 1. Clone and Build
 
 ```bash
 # Clone this repository
 git clone https://github.com/brandonbryant12/open-code-sst-custom-apis
 cd open-code-sst-custom-apis
 
-# Install dependencies (npm, yarn, or bun)
+# Install dependencies
 npm install
 # or
 bun install
@@ -30,182 +37,186 @@ bun run build
 
 ### 2. Link for Local Development
 
-#### Using npm:
 ```bash
-# Link this package locally
+# Link this package locally (note: the package name is open-code-custom-gateways)
 npm link
-
-# In your Open Code SST project directory
-cd /path/to/your/opencode-sst-project
-npm link open-code-sst-custom-apis
-```
-
-#### Using Bun:
-```bash
-# Link this package locally
+# or
 bun link
-
-# In your Open Code SST project directory
-cd /path/to/your/opencode-sst-project
-bun link open-code-sst-custom-apis
 ```
 
-### 3. Configure Open Code SST
+### 3. Configure Open Code
 
-Create `sst.config.js` in your Open Code SST project root:
+Create `opencode.json` in your project root:
 
-```javascript
-const { getGatewayService } = require('open-code-sst-custom-apis');
-require('dotenv').config();
+#### For Custom OpenAI Gateway:
 
-let gateway = null;
-
-module.exports = {
-  ai: {
-    provider: async () => {
-      if (!gateway) gateway = getGatewayService();
-      return gateway.getProvider();
-    },
-    model: async () => {
-      if (!gateway) gateway = getGatewayService();
-      return gateway.getDefaultModel();
-    },
+```json
+{
+  "$schema": "https://opencode.ai/config.json",
+  "provider": {
+    "custom-openai": {
+      "npm": "@ai-sdk/openai-compatible",
+      "name": "Custom OpenAI Gateway",
+      "options": {
+        "baseURL": "{env:CUSTOM_OPENAI_BASE_URL}",
+        "apiKey": "{env:CUSTOM_OPENAI_API_KEY}"
+      },
+      "models": {
+        "llama-70b": {
+          "name": "Llama 3.3 70B"
+        },
+        "gpt-4-turbo": {
+          "name": "GPT-4 Turbo"
+        }
+      }
+    }
   },
-};
+  "model": "custom-openai/llama-70b"
+}
+```
+
+#### For Custom Bedrock Gateway (with OAuth):
+
+Since Bedrock requires OAuth authentication, you'll need to use our custom adapter:
+
+```json
+{
+  "$schema": "https://opencode.ai/config.json",
+  "provider": {
+    "custom-bedrock": {
+      "npm": "open-code-custom-gateways",
+      "name": "Custom Bedrock Gateway",
+      "type": "bedrock",
+      "options": {
+        "baseURL": "{env:CUSTOM_BEDROCK_BASE_URL}",
+        "appId": "{env:CUSTOM_BEDROCK_APP_ID}",
+        "appName": "{env:CUSTOM_BEDROCK_APP_NAME}",
+        "oauthUrl": "{env:CUSTOM_BEDROCK_OAUTH_URL}",
+        "clientId": "{env:CUSTOM_BEDROCK_CLIENT_ID}",
+        "clientSecret": "{env:CUSTOM_BEDROCK_CLIENT_SECRET}"
+      },
+      "models": {
+        "claude-opus-4": {
+          "name": "Claude Opus 4"
+        },
+        "claude-sonnet": {
+          "name": "Claude 3 Sonnet"
+        }
+      }
+    }
+  },
+  "model": "custom-bedrock/claude-opus-4"
+}
 ```
 
 ### 4. Set Environment Variables
 
-Create `.env` file in your Open Code SST project:
+Create `.env` file in your project:
 
-#### For Custom OpenAI Gateway:
+#### For OpenAI Gateway:
 ```bash
-GATEWAY_PROVIDER=custom-openai
 CUSTOM_OPENAI_BASE_URL=https://your-openai-gateway.com/v1
 CUSTOM_OPENAI_API_KEY=your-api-key
-CUSTOM_OPENAI_MODELS='[
-  {
-    "id": "meta-llama/Llama-3.3-70B-Instruct:latest",
-    "name": "Llama 3.3 70B",
-    "isDefault": true
-  },
-  {
-    "id": "gpt-4-turbo",
-    "name": "GPT-4 Turbo"
-  }
-]'
 ```
 
-#### For Custom Bedrock Gateway:
+#### For Bedrock Gateway:
 ```bash
-GATEWAY_PROVIDER=custom-bedrock
 CUSTOM_BEDROCK_BASE_URL=https://your-bedrock-gateway.com
 CUSTOM_BEDROCK_APP_ID=your-app-id
 CUSTOM_BEDROCK_APP_NAME=your-app-name
 CUSTOM_BEDROCK_OAUTH_URL=https://oauth.example.com/token
 CUSTOM_BEDROCK_CLIENT_ID=your-client-id
 CUSTOM_BEDROCK_CLIENT_SECRET=your-client-secret
-CUSTOM_BEDROCK_MODELS='[
-  {
-    "id": "us.anthropic.claude-opus-4-20250514-v1:0",
-    "name": "Claude Opus 4",
-    "isDefault": true
-  },
-  {
-    "id": "anthropic.claude-3-sonnet-20240229-v1:0",
-    "name": "Claude 3 Sonnet"
-  }
-]'
 ```
 
-### 5. Run Open Code SST
+### 5. Use with Open Code
 
 ```bash
-# In your Open Code SST project
-opencode-sst --config ./sst.config.js
+# Start Open Code with your custom configuration
+opencode
 ```
 
-## Environment Variables Reference
+Your custom models will now be available in Open Code!
 
-### Common
-- `GATEWAY_PROVIDER` - Provider type: `custom-openai` or `custom-bedrock`
+## Configuration Reference
 
-### Custom OpenAI
-- `CUSTOM_OPENAI_BASE_URL` - Your OpenAI-compatible gateway URL
-- `CUSTOM_OPENAI_API_KEY` - API key for authentication
-- `CUSTOM_OPENAI_MODELS` - JSON array of available models
+### Provider Options
 
-### Custom Bedrock
-- `CUSTOM_BEDROCK_BASE_URL` - Your Bedrock gateway URL
-- `CUSTOM_BEDROCK_APP_ID` - Application ID
-- `CUSTOM_BEDROCK_APP_NAME` - Application name
-- `CUSTOM_BEDROCK_OAUTH_URL` - OAuth token endpoint
-- `CUSTOM_BEDROCK_CLIENT_ID` - OAuth client ID
-- `CUSTOM_BEDROCK_CLIENT_SECRET` - OAuth client secret
-- `CUSTOM_BEDROCK_MODELS` - JSON array of available models
+#### OpenAI-Compatible Gateways
+Use the built-in `@ai-sdk/openai-compatible` package:
+- `baseURL`: Your gateway endpoint
+- `apiKey`: API key for authentication
 
-### Model Configuration Format
+#### Bedrock Gateways (OAuth)
+Use our custom adapter `open-code-custom-gateways`:
+- `baseURL`: Your gateway endpoint
+- `appId`: Application ID
+- `appName`: Application name
+- `oauthUrl`: OAuth token endpoint
+- `clientId`: OAuth client ID
+- `clientSecret`: OAuth client secret
+
+### Model Configuration
+
+Models are defined in the `models` section of each provider:
 ```json
-[
-  {
-    "id": "model-identifier",
-    "name": "Human Readable Name",
-    "description": "Optional description",
-    "isDefault": true
+"models": {
+  "model-id": {
+    "name": "Display Name"
   }
-]
+}
 ```
 
-## Development Commands
+The full model ID in Open Code will be `provider-id/model-id`.
 
+## Development
+
+### Validate Configuration
 ```bash
-# Build TypeScript
-npm run build
-
-# Watch mode
-npm run dev
-
-# Validate environment configuration
 npm run validate-env
+# or
+bun run validate-env
+```
 
-# Run example
+### Run Examples
+```bash
 npm run example
+# or
+bun run example
 ```
 
 ## Troubleshooting
 
-### Validation Script
-Test your configuration:
-```bash
-npm run validate-env
-```
+### Config File Location
+- Project-level: `opencode.json` in your project root
+- Global: `~/.config/opencode/opencode.json`
 
 ### Common Issues
 
-1. **Module not found**
-   - Ensure you've run `npm link` (or `bun link`) in both directories
-   - Check that the build completed successfully
+1. **Provider not found**
+   - Ensure you've run `npm link` (or `bun link`) in this repository
+   - Check that the npm package name in opencode.json matches exactly
 
-2. **Invalid environment variables**
-   - Run the validation script to check your configuration
-   - Ensure models JSON is properly formatted
+2. **Authentication failures**
+   - Verify all environment variables are set
+   - Check OAuth credentials for Bedrock
+   - Ensure API keys are valid for OpenAI gateways
 
-3. **Authentication failures**
-   - Verify API keys and OAuth credentials
-   - Check network access to gateway endpoints
-
-4. **No models available**
-   - Ensure at least one model has `"isDefault": true`
-   - Check that the models JSON array is valid
+3. **Models not appearing**
+   - Verify your opencode.json syntax
+   - Check that model IDs don't contain special characters
+   - Use the full model ID format: `provider-id/model-id`
 
 ## Architecture
 
-This adapter:
-- Wraps custom gateway endpoints with AI SDK-compatible interfaces
-- Handles OAuth authentication for Bedrock gateways
-- Supports multiple models per provider
-- Provides type-safe TypeScript interfaces
+This adapter provides:
+- OAuth token management for Bedrock gateways
+- Request transformation for custom gateway formats
+- Compatible interfaces for Open Code's AI SDK
 
-## Local Development Only
+## Note
 
-This repository is intended for local development with Open Code SST. It is not published to npm and should be used via `npm link` for local testing.
+This is a local development adapter. For production use, consider:
+- Publishing as a proper npm package
+- Contributing to Models.dev for official support
+- Using Open Code's built-in providers when possible
