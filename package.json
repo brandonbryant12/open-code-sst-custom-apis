@@ -1,7 +1,7 @@
 {
   "name": "open-code-sst-custom-apis",
-  "version": "1.0.0",
-  "description": "Custom API gateway implementations for Open Code SST",
+  "private": true,
+  "description": "Local adapter for custom AI gateways with Open Code SST",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
@@ -13,16 +13,6 @@
     "example": "tsx examples/basic-usage.ts",
     "validate-env": "tsx scripts/validate-env.ts"
   },
-  "keywords": [
-    "ai",
-    "llm",
-    "gateway",
-    "openai",
-    "bedrock",
-    "custom"
-  ],
-  "author": "Your Organization",
-  "license": "MIT",
   "dependencies": {
     "@ai-sdk/amazon-bedrock": "*",
     "@ai-sdk/openai": "*",
@@ -40,19 +30,8 @@
     "tsx": "*",
     "typescript": "*"
   },
-  "files": [
-    "dist",
-    "src",
-    "README.md",
-    "SETUP_GUIDE.md",
-    "LICENSE"
-  ],
   "repository": {
     "type": "git",
     "url": "https://github.com/brandonbryant12/open-code-sst-custom-apis"
-  },
-  "bugs": {
-    "url": "https://github.com/brandonbryant12/open-code-sst-custom-apis/issues"
-  },
-  "homepage": "https://github.com/brandonbryant12/open-code-sst-custom-apis#readme"
+  }
 }
