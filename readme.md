@@ -47,6 +47,12 @@ const result = await generateText({
 });
 ```
 
+## Open Code SST Integration
+
+**New!** 🎉 See our dedicated guides for integrating with Open Code SST:
+- [Quick Start Guide](./QUICK_START_OPENCODE_SST.md) - Get up and running in 5 minutes
+- [Full Integration Guide](./OPENCODE_SST_INTEGRATION.md) - Detailed step-by-step instructions
+
 ## Documentation
 
 - [Setup Guide](./SETUP_GUIDE.md) - Detailed installation and configuration instructions
